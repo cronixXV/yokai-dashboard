@@ -1,8 +1,9 @@
-import { generateMockAnomalies } from "@/shared/mocks/mock-utils";
+import { getAnomalies } from "@/shared/lib/in-memory-store";
+
 import { AnomaliesResponseSchema } from "@/shared/schemes/scheme";
 import { NextResponse } from "next/server";
 
-const anomalies = generateMockAnomalies(6);
+const anomalies = getAnomalies();
 
 export async function GET() {
   try {

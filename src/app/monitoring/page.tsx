@@ -6,6 +6,7 @@ import { useCaptureAnomalyMutation } from "@/entities/anomaly/hooks/use-capture-
 import { AnomalyList } from "@/features/anomaly/AnomalyList";
 import { AppNotification } from "@/shared/ui/AppNotification/app-notification";
 import { useState } from "react";
+import styles from "./page.module.scss";
 
 export default function MonitoringPage() {
   useAnomaliesSSE();
@@ -30,11 +31,12 @@ export default function MonitoringPage() {
   };
 
   if (isLoading) return <div className="container">Loading anomalies...</div>;
+
   if (isError)
     return <div className="container">Error: {(error as Error)?.message}</div>;
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <h1>Yokai Monitoring Dashboard</h1>
       {showError && (
         <AppNotification

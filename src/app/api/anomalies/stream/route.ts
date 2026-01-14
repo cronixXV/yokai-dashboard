@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { anomalies } from "../route";
+import { getAnomalies, updateAnomalyField } from "@/shared/lib/in-memory-store";
 import { THREAT_LEVELS } from "@/shared/lib/anomaly";
 
 export const runtime = "nodejs";
@@ -10,7 +10,6 @@ export async function GET(request: NextRequest) {
       const encoder = new TextEncoder();
       let intervalId: NodeJS.Timeout | null = null;
       let timeoutId: NodeJS.Timeout | null = null;
-
       let isClosed = false;
 
       const sendUpdate = () => {
@@ -22,23 +21,24 @@ export async function GET(request: NextRequest) {
           return;
         }
 
+        const anomalies = getAnomalies();
         if (anomalies.length === 0) return;
 
-        const randomIndex = Math.floor(Math.random() * anomalies.length);
-        const anomaly = anomalies[randomIndex];
+        const activeAnomalies = anomalies.filter((a) => a.status === "Active");
+        if (activeAnomalies.length === 0) return;
 
-        if (anomaly.status !== "Active") return;
-
+        const randomAnomaly =
+          activeAnomalies[Math.floor(Math.random() * activeAnomalies.length)];
         const newThreatLevel =
           THREAT_LEVELS[Math.floor(Math.random() * THREAT_LEVELS.length)];
 
-        anomalies[randomIndex] = {
-          ...anomaly,
+        updateAnomalyField(randomAnomaly.id, (a) => ({
+          ...a,
           threatLevel: newThreatLevel,
-        };
+        }));
 
         const message = JSON.stringify({
-          id: anomaly.id,
+          id: randomAnomaly.id,
           threatLevel: newThreatLevel,
         });
 
