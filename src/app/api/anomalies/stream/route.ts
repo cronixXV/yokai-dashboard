@@ -1,16 +1,27 @@
-import { NextResponse } from "next/server";
-
-import { THREAT_LEVELS } from "@/shared/lib/anomaly";
+import { NextRequest, NextResponse } from "next/server";
 import { anomalies } from "../route";
+import { THREAT_LEVELS } from "@/shared/lib/anomaly";
 
 export const runtime = "nodejs";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const stream = new ReadableStream({
     start(controller) {
       const encoder = new TextEncoder();
+      let intervalId: NodeJS.Timeout | null = null;
+      let timeoutId: NodeJS.Timeout | null = null;
+
+      let isClosed = false;
 
       const sendUpdate = () => {
+        if (
+          isClosed ||
+          controller.desiredSize === null ||
+          controller.desiredSize <= 0
+        ) {
+          return;
+        }
+
         if (anomalies.length === 0) return;
 
         const randomIndex = Math.floor(Math.random() * anomalies.length);
@@ -31,19 +42,41 @@ export async function GET() {
           threatLevel: newThreatLevel,
         });
 
-        controller.enqueue(encoder.encode(`data: ${message}\n\n`));
+        try {
+          controller.enqueue(encoder.encode(`data: ${message}\n\n`));
+        } catch (err) {
+          console.warn("Failed to enqueue SSE message:", err);
+          cleanup();
+        }
       };
 
-      setTimeout(() => {
-        sendUpdate();
-
-        const interval = setInterval(sendUpdate, 5000);
-
-        const timer = setTimeout(() => {
-          clearInterval(interval);
+      const cleanup = () => {
+        if (isClosed) return;
+        isClosed = true;
+        if (intervalId) clearInterval(intervalId);
+        if (timeoutId) clearTimeout(timeoutId);
+        try {
           controller.close();
-        }, 60_000);
+        } catch (err) {
+          console.warn("Failed to close SSE connection:", err);
+        }
+      };
+
+      timeoutId = setTimeout(() => {
+        if (isClosed) return;
+        sendUpdate();
+        intervalId = setInterval(() => {
+          if (!isClosed) sendUpdate();
+        }, 5000);
       }, 1000);
+
+      const abortController = request.signal;
+      abortController.onabort = () => {
+        console.log("SSE client disconnected");
+        cleanup();
+      };
+
+      return cleanup;
     },
   });
 
