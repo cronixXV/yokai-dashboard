@@ -1,7 +1,6 @@
 "use client";
 
 import { AnomalyCard } from "../../AnomalyCard/ui/anomaly-card";
-
 import { IAnomalyListProps } from "../model/types/types";
 
 import styles from "./anomalyList.module.scss";

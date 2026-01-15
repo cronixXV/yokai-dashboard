@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+
 import { Anomaly } from "@/shared/schemes/scheme";
 
 const ANOMALIES_QUERY_KEY = ["anomalies"];

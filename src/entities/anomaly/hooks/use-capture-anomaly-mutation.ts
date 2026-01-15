@@ -1,6 +1,7 @@
-import { Anomaly } from "@/shared/schemes/scheme";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { captureAnomalyApi } from "../api/capture-anomaly-api";
+
+import { Anomaly } from "@/shared/schemes/scheme";
 
 const ANOMALIES_QUERY_KEY = ["anomalies"];
 

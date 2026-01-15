@@ -1,5 +1,6 @@
-import { Anomaly } from "@/shared/schemes/scheme";
 import { UseMutationResult } from "@tanstack/react-query";
+
+import { Anomaly } from "@/shared/schemes/scheme";
 
 type CaptureMutation = UseMutationResult<Anomaly, Error, string, unknown>;
 

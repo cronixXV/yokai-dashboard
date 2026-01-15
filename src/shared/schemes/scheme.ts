@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { ANOMALY_STATUSES, THREAT_LEVELS } from "../lib/anomaly";
 
 export const AnomalySchema = z.object({

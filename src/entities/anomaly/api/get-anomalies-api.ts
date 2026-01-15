@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+
 import { AnomaliesResponseSchema } from "@/shared/schemes/scheme";
 import { apiClient } from "@/shared/api/instance";
 

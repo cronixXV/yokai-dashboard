@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { getAnomalies, updateAnomalyField } from "@/shared/lib/in-memory-store";
 import { THREAT_LEVELS } from "@/shared/lib/anomaly";
 

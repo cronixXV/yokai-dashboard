@@ -1,7 +1,7 @@
-import { getAnomalies } from "@/shared/lib/in-memory-store";
-
-import { AnomaliesResponseSchema } from "@/shared/schemes/scheme";
 import { NextResponse } from "next/server";
+
+import { getAnomalies } from "@/shared/lib/in-memory-store";
+import { AnomaliesResponseSchema } from "@/shared/schemes/scheme";
 
 const anomalies = getAnomalies();
 

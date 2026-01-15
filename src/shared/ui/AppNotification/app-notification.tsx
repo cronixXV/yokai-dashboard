@@ -1,5 +1,7 @@
 "use client";
+
 import { useEffect } from "react";
+
 import styles from "./appNotification.module.scss";
 
 interface INotificationProps {

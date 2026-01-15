@@ -1,6 +1,8 @@
 import Link from "next/link";
-import styles from "./page.module.scss";
+
 import { Footer } from "@/shared/ui/Footer/footer";
+
+import styles from "./page.module.scss";
 
 export default function Home() {
   return (
