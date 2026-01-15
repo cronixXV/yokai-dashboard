@@ -1,17 +1,23 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { Anomaly } from "@/shared/schemes/scheme";
 
 const ANOMALIES_QUERY_KEY = ["anomalies"];
+const RECONNECT_DELAY = 2000;
 
 export const useAnomaliesSSE = () => {
   const queryClient = useQueryClient();
+  const eventSourceRef = useRef<EventSource | null>(null);
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
+  const connect = () => {
+    if (typeof window === "undefined") return;
+
     const eventSource = new EventSource("/api/anomalies/stream");
+    eventSourceRef.current = eventSource;
 
     eventSource.onmessage = (event) => {
       try {
@@ -37,14 +43,32 @@ export const useAnomaliesSSE = () => {
     };
 
     eventSource.onerror = () => {
-      console.warn("SSE connection lost. Reconnecting in 2s...");
-      eventSource.close();
-      // Повторное подключение можно реализовать, но проще пересоздать при ошибке
-      // или использовать библиотеку, но для демо — достаточно однократного подключения
+      console.warn(
+        "SSE connection lost. Reconnecting in",
+        RECONNECT_DELAY / 1000,
+        "s..."
+      );
+      cleanup();
+      reconnectTimeoutRef.current = setTimeout(connect, RECONNECT_DELAY);
     };
+  };
+
+  const cleanup = () => {
+    if (eventSourceRef.current) {
+      eventSourceRef.current.close();
+      eventSourceRef.current = null;
+    }
+    if (reconnectTimeoutRef.current) {
+      clearTimeout(reconnectTimeoutRef.current);
+      reconnectTimeoutRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    connect();
 
     return () => {
-      eventSource.close();
+      cleanup();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

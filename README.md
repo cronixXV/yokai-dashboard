@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧿 Yokai Monitoring Dashboard
 
-## Getting Started
+**Реал-тайм дашборд для отслеживания духов (ёкаев) в Токио.**  
+Операторы наблюдают всплески духовной энергии и могут оперативно отправлять отряды зачистки.
 
-First, run the development server:
+---
+
+## ✨ Возможности
+
+- 📋 Просмотр списка активных аномалий (духов)  
+  — уровень угрозы  
+  — текущая локация
+
+- 🎯 Кнопка **Capture** для отправки отряда зачистки
+
+- ⚡ **Optimistic Update**  
+  Интерфейс мгновенно реагирует на действия пользователя
+
+- ❌ **30% шанс провала захвата**  
+  В случае ошибки состояние корректно откатывается
+
+- 🔁 **Real-time обновления**  
+  Уровень угрозы обновляется через **Server-Sent Events (SSE)**
+
+- 🧪 Полная валидация данных с помощью **Zod**
+
+- 🧱 Архитектура проекта по **Feature-Sliced Design (FSD)**
+
+---
+
+## 🛠 Технологический стек
+
+**Frontend**
+
+- ⚛️ Next.js 16 (App Router)
+- ⚛️ React 19
+- 🟦 TypeScript
+
+**State & Async**
+
+- 🔄 TanStack Query v5
+
+**Styling**
+
+- 🎨 SCSS Modules
+
+**Validation**
+
+- ✅ Zod
+
+**DevOps**
+
+- 🐳 Docker
+- 🐳 Docker Compose
+
+**Testing**
+
+- — не требуется по ТЗ
+
+---
+
+## 🚀 Запуск проекта
+
+### ▶️ Локально (dev-режим)
+
+Установите зависимости и запустите проект:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🐳 Docker (production‑сборка)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Соберите и запустите контейнер:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+docker compose up --build
 
-## Learn More
+После запуска приложение будет доступно по адресу:
 
-To learn more about Next.js, take a look at the following resources:
+👉 http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+💡 Dev‑режим в Docker
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Чтобы запустить проект в dev‑режиме через Docker:
 
-## Deploy on Vercel
+Откройте файл docker-compose.yml.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Раскомментируйте следующие параметры:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+command
+
+volumes
+
+NODE_ENV=development
+
+Перезапустите контейнеры:
+
+docker compose down
+docker compose up --build
+
+Теперь проект будет работать в режиме разработки с горячей перезагрузкой.
+
+📜 Лицензия
+
+Проект распространяется под лицензией MIT.
+
+Вы можете свободно использовать, изменять и распространять данный проект.
+
+🧙‍♂️ Легенда проекта
+
+Следи за балансом духовной энергии и не дай ёкаям захватить Токио!
+Пусть код будет чистым, контейнеры — стабильными, а духи — спокойными ⚔️👹
