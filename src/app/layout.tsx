@@ -10,7 +10,7 @@ const interSans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Spirit Monitoring Dashboard",
+  title: "Yokai Monitoring Dashboard",
   description: "Real-time ghost anomaly tracking in Tokyo",
 };
 

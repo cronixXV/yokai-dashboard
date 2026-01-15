@@ -1,33 +1,17 @@
 "use client";
 
-import { Anomaly } from "@/shared/schemes/scheme";
-import styles from "./anomalyCard.module.scss";
 import clsx from "clsx";
 
-interface IAnomalyCardProps {
-  anomaly: Anomaly;
-  onCapture: (id: string) => void;
-  isCapturing: boolean;
-}
+import { getThreatColor } from "../model/lib/getThreatColor";
+import { IAnomalyCardProps } from "../model/types/types";
+
+import styles from "./anomalyCard.module.scss";
 
 export const AnomalyCard = ({
   anomaly,
   onCapture,
   isCapturing,
 }: IAnomalyCardProps) => {
-  const getThreatColor = (level: Anomaly["threatLevel"]) => {
-    switch (level) {
-      case "Critical":
-        return "critical";
-      case "High":
-        return "high";
-      case "Medium":
-        return "medium";
-      default:
-        return "low";
-    }
-  };
-
   const threatClass = getThreatColor(anomaly.threatLevel);
 
   return (
@@ -38,10 +22,12 @@ export const AnomalyCard = ({
           {anomaly.threatLevel}
         </span>
       </div>
+
       <p className={styles.location}>📍 {anomaly.location}</p>
       <p className={styles.status}>
         Status: <strong>{anomaly.status}</strong>
       </p>
+
       {anomaly.status === "Active" && (
         <button
           className={styles.captureBtn}

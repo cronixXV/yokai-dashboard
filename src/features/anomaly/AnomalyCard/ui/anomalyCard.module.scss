@@ -1,5 +1,5 @@
 .card {
-    border: 1px solid #ddd;
+    border: 1px solid #dbdbdb;
     border-radius: 12px;
     padding: 16px;
     background: white;
@@ -17,33 +17,33 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   
   .name {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 19px;
     font-weight: 700;
   }
   
   .threatBadge {
     padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    border-radius: 12px;
+    font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
     color: white;
   }
   
-  .threatBadge.low      { background: #4caf50; }     /* Green */
-  .threatBadge.medium   { background: #ff9800; }     /* Orange */
-  .threatBadge.high     { background: #f44336; }     /* Red */
-  .threatBadge.critical { background: #9c27b0; }     /* Purple */
+  .threatBadge.low      { background: #5fc962; }     
+  .threatBadge.medium   { background: #fd9a05; }    
+  .threatBadge.high     { background: #ff2515; }    
+  .threatBadge.critical { background: #9721ac; }     
   
   .location, .status {
     margin: 6px 0;
-    font-size: 0.95rem;
-    color: #555;
+    font-size: 15px;
+    color: #111111;
   }
   
   .captureBtn {
@@ -52,7 +52,7 @@
     background: #6a5acd;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
     font-weight: 600;
     transition: background 0.2s;
