@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AnomalyList } from "@/features/anomaly/AnomalyList";
 import { AppNotification } from "@/shared/ui/AppNotification/app-notification";
 
-import { IMonitoringDashboardProps } from "../model/hooks/types/types";
+import { IMonitoringDashboardProps } from "../model/types/types";
 
 import styles from "./monitoringDashboard.module.scss";
 
